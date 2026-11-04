@@ -1,0 +1,4 @@
+import React from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+export function PhoneField({value,onChangeText}:{value:string;onChangeText:(text:string)=>void}) { return <View style={styles.wrap}><View style={styles.country}><Text style={styles.flag}>🇦🇼</Text><Text style={styles.code}>+44</Text><Text style={styles.chevron}>⌄</Text></View><TextInput value={value} onChangeText={onChangeText} keyboardType="phone-pad" style={styles.input} /></View>; }
+const styles=StyleSheet.create({wrap:{height:55,marginTop:28,borderRadius:12,backgroundColor:'#f5f5f4',flexDirection:'row',alignItems:'center',padding:4},country:{height:'100%',width:132,borderRadius:12,backgroundColor:'#fff',flexDirection:'row',alignItems:'center',justifyContent:'space-around',elevation:2},flag:{fontSize:17},code:{fontSize:16,color:'#666f7d'},chevron:{fontSize:18,color:'#777'},input:{flex:1,paddingHorizontal:12,fontSize:16,color:'#041023',letterSpacing:.3}});

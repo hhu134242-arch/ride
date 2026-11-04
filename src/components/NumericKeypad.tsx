@@ -1,0 +1,5 @@
+import React from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+const rows=[['1','2','3'],['4','5','6'],['7','8','9'],['','0','⌫']];
+export function NumericKeypad({onPress,onDelete}:{onPress:(digit:string)=>void;onDelete:()=>void}) { return <View style={styles.panel}><View style={styles.grid}>{rows.map((row,i)=><View key={i} style={styles.row}>{row.map((key,j)=><Pressable key={`${i}-${j}`} onPress={()=>key==='⌫'?onDelete():key&&onPress(key)} style={[styles.key,(i===3&&j!==1)&&styles.empty]}>{key==='⌫'?<Text style={styles.delete}>⌫</Text>:<Text style={styles.number}>{key}</Text>}</Pressable>)}</View>)}</View></View>; }
+const styles=StyleSheet.create({panel:{position:'absolute',left:-24,right:-24,bottom:0,height:303,backgroundColor:'#d1d5db',paddingTop:31,paddingHorizontal:27},grid:{gap:10},row:{flexDirection:'row',justifyContent:'space-between',gap:10},key:{height:50,flex:1,borderRadius:8,backgroundColor:'#fff',alignItems:'center',justifyContent:'center'},number:{fontSize:20,color:'#041023'},delete:{fontSize:16,color:'#041023'},empty:{opacity:0,backgroundColor:'transparent'}});
