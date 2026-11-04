@@ -5,11 +5,15 @@ import { AuthButton } from './src/components/AuthButton';
 import { PhoneField } from './src/components/PhoneField';
 import { NumericKeypad } from './src/components/NumericKeypad';
 import { colors } from './src/theme/colors';
+import { DesignScreen } from './src/screens/DesignScreens';
 
 export default function App() {
   const [phone, setPhone] = useState('01480434005');
   const [step, setStep] = useState<'phone' | 'email' | 'verify'>('phone');
+  const [screen, setScreen] = useState<string | null>(null);
+  const navigate = (target: string) => { setStep('verify'); setScreen(target); };
   const addDigit = (digit: string) => setPhone(value => `${value}${digit}`.slice(0, 15));
+  if (screen) return <SafeAreaView style={styles.safe}><StatusBar barStyle="dark-content" /><DesignScreen name={screen} onBack={() => setScreen('Home page')} onNavigate={navigate} /></SafeAreaView>;
   return (
     <SafeAreaView style={styles.safe}>
       <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
@@ -18,7 +22,7 @@ export default function App() {
         <AuthHeader onClose={() => setStep('phone')} />
         <Text style={styles.title}>{step === 'verify' ? 'Verification' : step === 'email' ? 'Sign up with Email' : 'Enter your phone number'}</Text>
         {step === 'email' ? <View style={styles.form}><TextInput placeholder="Email address" keyboardType="email-address" style={styles.input} /><TextInput placeholder="Password" secureTextEntry style={styles.input} /></View> : <PhoneField value={phone} onChangeText={setPhone} />}
-        <AuthButton title={step === 'phone' ? 'Sign in' : step === 'email' ? 'Sign Up' : 'Verify'} onPress={() => setStep(step === 'phone' ? 'verify' : 'phone')} />
+        <AuthButton title={step === 'phone' ? 'Sign in' : step === 'email' ? 'Sign Up' : 'Verify'} onPress={() => step === 'phone' ? setStep('verify') : navigate('Home page')} />
         <Text style={styles.switch} onPress={() => setStep(step === 'email' ? 'phone' : 'email')}>{step === 'email' ? 'Sign in here' : 'Sign up here'}</Text>
         <NumericKeypad onPress={addDigit} onDelete={() => setPhone(value => value.slice(0, -1))} />
       </View>
